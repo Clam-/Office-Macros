@@ -22,11 +22,10 @@ Sub BorderTotals()
             End If
         Next
         If hasTotal Then
-            Debug.Print "Start: " & cellStart & "  End: " & cellEnd
             Set borderRange = ActiveSheet.Range(cellStart, cellEnd)
-            ' borderRange.Borders.LineStyle = xlLineStyleNone
             borderRange.Borders.LineStyle = xlContinuous
             borderRange.Borders.Weight = xlMedium
+			borderRange.Borders.Color = RGB(0, 0, 0)
             borderRange.Borders(xlInsideVertical).LineStyle = xlLineStyleNone
         End If
     Next
