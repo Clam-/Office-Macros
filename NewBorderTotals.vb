@@ -1,6 +1,7 @@
+
 Sub NewBorders()
      ' xlEdgeRight xlContinuous
-    Dim hasTotal As Boolean
+    Dim hasTotal, padding As Boolean
     Dim cellStart, cellEnd As String
     Dim bordStart, boardEnd As String
     Dim borderRange As Range
@@ -10,6 +11,7 @@ Sub NewBorders()
         hasTotal = False
         bordStart = ""
         bordEnd = ""
+        padding = False
         For Each cell In Row.Cells
             ' detect existing borders
             If cell.Borders(xlEdgeRight).LineStyle = xlContinuous Then
@@ -28,6 +30,9 @@ Sub NewBorders()
                     hasTotal = True
                     cellStart = cell.Address
                     cellEnd = cell.Address
+                    If Not (cell.Value2 Like "Total*") Then
+                        padding = True
+                    End If
                 End If
             End If
             If hasTotal Then
@@ -46,7 +51,11 @@ Sub NewBorders()
             End If
             Set borderRange = ActiveSheet.Range(cellStart, cellEnd)
             borderRange.Borders.LineStyle = xlContinuous
-            borderRange.Borders.Weight = xlMedium
+            If padding Then
+                borderRange.Borders.Weight = xlThin
+            Else
+                borderRange.Borders.Weight = xlMedium
+            End If
             borderRange.Borders.Color = RGB(0, 0, 0)
             borderRange.Borders(xlInsideVertical).LineStyle = xlLineStyleNone
         End If
