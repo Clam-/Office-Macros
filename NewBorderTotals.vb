@@ -25,7 +25,7 @@ Sub NewBorders()
                 End If
             End If
             ' Detect cell contents
-            If Not IsEmpty(cell) Then
+            If Not IsEmpty(cell) And Not IsError(cell) Then
                 If cell.Value2 Like "*Total*" Then
                     hasTotal = True
                     cellStart = cell.Address
